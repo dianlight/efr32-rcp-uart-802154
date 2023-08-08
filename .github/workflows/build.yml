@@ -13,13 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: "joncloud/download-install-action@main"
-        with:
-          checksum-url: "https://www.silabs.com/documents/login/software/SimplicityStudio-5.tgz.sha256"
-          checksum-entry: "SimplicityStudio-5.tgz"
-          archive-url: "https://www.silabs.com/documents/login/software/SimplicityStudio-5.tgz"
-          archive-entries: "."
-          target-path: "./bin"
+      - name: "Download And Install Simplicity Commander"
+        run: |
+          wget https://www.silabs.com/documents/login/software/SimplicityCommander-Linux.zip
+          unzip SimplicityCommander-Linux.zip
+          tar xvf SimplicityCommander-Linux/Commander_linux_x86_64_1v15p3b1357.tar.bz
       - uses: robinraju/release-downloader@v1.8
         name: Download GeckoSDK
         with:
@@ -33,16 +31,10 @@ jobs:
         uses: turtlesec-no/get-arm-toolchain@main
       - name: Arm Toolchain version
         run: echo "${{ steps.arm.outputs.version }}"
-      #- name: Download And Install Gnu Arm GCC 10.3
-      #  run: sh ./install_adm_gnu_toolchain.sh
       - name: make
         run: BASE_SDK_PATH=./gecko_sdk_4.3.1 make -f rcp-uart-802154_2.Makefile release
-      #    - name: make check
-      #      run: make check
-      #    - name: make distcheck
-      #      run: make distcheck
       - name: create gbl
-        run: ./bin/commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
+        run: ./commander/commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
