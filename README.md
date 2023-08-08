@@ -18,5 +18,5 @@ Configure as Below:
 
  - Baudrate: 115200
  - Hardware flow control: no
- - Automatically flash firmware: no
+ - Automatically flash Firmware: no
 
