@@ -2,8 +2,8 @@ name: C/C++ CI
 
 on:
   workflow_dispatch:
-#  push:
-#    branches: [ "main" ]
+  push:
+    branches: ["main"]
 #  pull_request:
 #    branches: [ "main" ]
 
@@ -14,16 +14,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: robinraju/release-downloader@v1.8
+        name: Download GeckoSDK
         with:
           repository: "SiliconLabs/gecko_sdk"
           tag: "v4.3.1"
           fileName: "gecko-sdk.zip"
           out-file-path: ./gecko_sdk_4.3.1
           extract: true
-      #    - name: configure
-      #      run: ./configure
+      - name: Install Arm Toolchain
+        id: arm
+        uses: turtlesec-no/get-arm-toolchain@main
+      - name: Arm Toolchain version
+        run: echo "${{ steps.arm.outputs.version }}"
+      #- name: Download And Install Gnu Arm GCC 10.3
+      #  run: sh ./install_adm_gnu_toolchain.sh
       - name: make
-        run: make -f rcp-uart-802154_2.Makefile -DBASE_SDK_PATH=./gecko_sdk_4.3.1 release
+        run: BASE_SDK_PATH=./gecko_sdk_4.3.1 make -f rcp-uart-802154_2.Makefile release
       #    - name: make check
       #      run: make check
       #    - name: make distcheck
