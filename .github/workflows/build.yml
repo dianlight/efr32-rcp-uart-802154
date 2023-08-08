@@ -42,13 +42,19 @@ jobs:
         with:
           name: Firmwares
           path: build/release/rcp-uart-802154* # or path/to/artifact
-      - name: Create Release ${{env.GECKO_VERSION}}
+      - name: Recreate Release ${{env.GECKO_VERSION}}
+        uses: GongT/actions-recreate-release@v1
         id: release
-        uses: avakar/tag-and-release@v1
-        with:
-          tag_name: ${{env.GECKO_VERSION}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{env.GECKO_VERSION}}
+          release_name: Release at ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - Bump Gecko SDK version ${{env.GECKO_VERSION}}
+          draft: false
+          prerelease: false
       - name: Upload Firmware (GBL) to release ${{env.GECKO_VERSION}}
         uses: actions/upload-release-asset@v1
         env:
