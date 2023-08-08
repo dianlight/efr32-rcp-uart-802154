@@ -15,13 +15,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: 'joncloud/download-install-action@main'
+    - uses: robinraju/release-downloader@v1.8
       with:
-#        checksum-url: 'https://releases.hashicorp.com/terraform/1.5.3/terraform_1.5.3_SHA256SUMS'
-#        checksum-entry: 'terraform_1.5.3_linux_amd64.zip'
-        archive-url: 'https://github.com/SiliconLabs/gecko_sdk/releases/download/v4.3.1/gecko-sdk.zip'
-        target-path: /Users/ltarantino/SimplicityStudio/SDKs/gecko_sdk_3/
-#        archive-entries: 'terraform'    
+        repository: "SiliconLabs/gecko_sdk"
+        tag: "v4.3.1"
+        fileName: "gecko-sdk.zip"
+        out-file-path: /Users/ltarantino/SimplicityStudio/SDKs/gecko_sdk_3/
+        extract: true  
 #    - name: configure
 #      run: ./configure
     - name: make
