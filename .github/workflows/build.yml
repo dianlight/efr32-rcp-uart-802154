@@ -13,6 +13,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: "joncloud/download-install-action@main"
+        with:
+          checksum-url: "https://www.silabs.com/documents/login/software/SimplicityStudio-5.tgz.sha256"
+          checksum-entry: "SimplicityStudio-5.tgz"
+          archive-url: "https://www.silabs.com/documents/login/software/SimplicityStudio-5.tgz"
+          archive-entries: "."
+          target-path: "./bin"
       - uses: robinraju/release-downloader@v1.8
         name: Download GeckoSDK
         with:
@@ -26,11 +33,6 @@ jobs:
         uses: turtlesec-no/get-arm-toolchain@main
       - name: Arm Toolchain version
         run: echo "${{ steps.arm.outputs.version }}"
-      - uses: actions/szymondukla-curl-gunzip@v3
-        name: Install Commander
-        with:
-          url: "https://www.silabs.com/documents/login/software/SimplicityCommander-Linux.zip"
-          destination: ./bin
       #- name: Download And Install Gnu Arm GCC 10.3
       #  run: sh ./install_adm_gnu_toolchain.sh
       - name: make
