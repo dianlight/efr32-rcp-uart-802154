@@ -7,6 +7,10 @@ on:
 #  pull_request:
 #    branches: [ "main" ]
 
+env:
+  GECKO_VERSION: "4.3.1"
+  COMMANDER_VERSION: "1v15p3b1357"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,14 +21,14 @@ jobs:
         run: |
           wget https://www.silabs.com/documents/login/software/SimplicityCommander-Linux.zip
           unzip SimplicityCommander-Linux.zip
-          tar xvf SimplicityCommander-Linux/Commander_linux_x86_64_1v15p3b1357.tar.bz
+          tar xvf SimplicityCommander-Linux/Commander_linux_x86_64_${COMMANDER_VERSION}.tar.bz
       - uses: robinraju/release-downloader@v1.8
         name: Download GeckoSDK
         with:
           repository: "SiliconLabs/gecko_sdk"
-          tag: "v4.3.1"
+          tag: "v${{env.GECKO_VERSION}}"
           fileName: "gecko-sdk.zip"
-          out-file-path: ./gecko_sdk_4.3.1
+          out-file-path: ./gecko_sdk_${{env.GECKO_VERSION}}
           extract: true
       - name: Install Arm Toolchain
         id: arm
@@ -32,10 +36,15 @@ jobs:
       - name: Arm Toolchain version
         run: echo "${{ steps.arm.outputs.version }}"
       - name: make
-        run: BASE_SDK_PATH=./gecko_sdk_4.3.1 make -f rcp-uart-802154_2.Makefile release
+        run: BASE_SDK_PATH=./gecko_sdk_${GECKO_VERSION} make -f rcp-uart-802154_2.Makefile release
       - name: create gbl
         run: ./commander/commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: build/release/ # or path/to/artifact
+          name: Firmwares
+          path: build/release/rcp-uart-802154* # or path/to/artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Firmwares (GBL)
+          path: build/release/rcp-uart-802154*.gbl # or path/to/artifact
+
