@@ -36,11 +36,11 @@
 
 // <o SL_CPC_DRV_UART_VCOM_RX_QUEUE_SIZE> Number of frame that can be queued in the driver receive queue
 // <i> Default: 10
-#define SL_CPC_DRV_UART_VCOM_RX_QUEUE_SIZE            15
+#define SL_CPC_DRV_UART_VCOM_RX_QUEUE_SIZE            10
 
 // <o SL_CPC_DRV_UART_VCOM_TX_QUEUE_SIZE> Number of frame that can be queued in the driver transmit queue
 // <i> Default: 10
-#define SL_CPC_DRV_UART_VCOM_TX_QUEUE_SIZE            15
+#define SL_CPC_DRV_UART_VCOM_TX_QUEUE_SIZE            10
 
 // <o SL_CPC_DRV_UART_VCOM_BAUDRATE> UART Baudrate
 // <i> Default: 115200

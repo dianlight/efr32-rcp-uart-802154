@@ -5,9 +5,13 @@
 
 // Convert CMSIS Markup config defines to mbedTLS specific config defines
 
+#if SL_MBEDTLS_RSA_NO_CRT
+  #define MBEDTLS_RSA_NO_CRT
+#endif
+
 // Allow undefining the specified cipher suites
 #if defined(SLI_MBEDTLS_AUTODETECT_CIPHERSUITES)
-#undef MBEDTLS_SSL_CIPHERSUITES
+  #undef MBEDTLS_SSL_CIPHERSUITES
 #endif
 
 #if SL_MBEDTLS_SSL_MAX_FRAGMENT_LENGTH
@@ -25,6 +29,9 @@
 #if SL_MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA_ENABLED
   #define MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA_ENABLED
 #endif
+#if SL_MBEDTLS_KEY_EXCHANGE_ECDHE_RSA_ENABLED
+  #define MBEDTLS_KEY_EXCHANGE_ECDHE_RSA_ENABLED
+#endif
 #if SL_MBEDTLS_KEY_EXCHANGE_ECDH_ECDSA_ENABLED
   #define MBEDTLS_KEY_EXCHANGE_ECDH_ECDSA_ENABLED
 #endif
@@ -38,7 +45,7 @@
 #endif
 
 
-#define SLI_SSL_IN_CONTENT_LEN_REQUIREMENT    900
+#define SLI_SSL_IN_CONTENT_LEN_REQUIREMENT  900
 
 // If the SDK requires a certain SSL buffer size, configure Mbed TLS
 // to size the buffer to the highest of the user/default or SDK setting.
@@ -49,7 +56,7 @@
 
 
 
-#define SLI_SSL_OUT_CONTENT_LEN_REQUIREMENT    900
+#define SLI_SSL_OUT_CONTENT_LEN_REQUIREMENT 900
 
 // If the SDK requires a certain SSL buffer size, configure Mbed TLS
 // to size the buffer to the highest of the user/default or SDK setting.
