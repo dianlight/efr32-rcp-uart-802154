@@ -26,6 +26,11 @@ jobs:
         uses: turtlesec-no/get-arm-toolchain@main
       - name: Arm Toolchain version
         run: echo "${{ steps.arm.outputs.version }}"
+      - uses: actions/szymondukla-curl-gunzip@v3
+        name: Install Commander
+        with:
+          url: "https://www.silabs.com/documents/login/software/SimplicityCommander-Linux.zip"
+          destination: ./bin
       #- name: Download And Install Gnu Arm GCC 10.3
       #  run: sh ./install_adm_gnu_toolchain.sh
       - name: make
@@ -35,4 +40,8 @@ jobs:
       #    - name: make distcheck
       #      run: make distcheck
       - name: create gbl
-        run: commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
+        run: ./bin/commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: build/release/ # or path/to/artifact
