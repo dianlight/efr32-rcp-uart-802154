@@ -47,4 +47,46 @@ jobs:
         with:
           name: Firmwares (GBL)
           path: build/release/rcp-uart-802154*.gbl # or path/to/artifact
-
+      - name: Create Release ${{env.GECKO_VERSION}}
+        id: release
+        uses: avakar/tag-and-release@v1
+        with:
+          tag_name: ${{env.GECKO_VERSION}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Firmware (GBL) to release ${{env.GECKO_VERSION}}
+        uses: actions/upload-release-asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: rcp-uart-802154.gbl
+          asset_content_type: application/binary
+          asset_path: build/release/rcp-uart-802154_2.gbl
+          upload_url: ${{steps.release.outputs.upload_url}}
+      - name: Upload Firmware (BIN) to release ${{env.GECKO_VERSION}}
+        uses: actions/upload-release-asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: rcp-uart-802154.bin
+          asset_content_type: application/binary
+          asset_path: build/release/rcp-uart-802154_2.bin
+          upload_url: ${{steps.release.outputs.upload_url}}
+      - name: Upload Firmware (S37) to release ${{env.GECKO_VERSION}}
+        uses: actions/upload-release-asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: rcp-uart-802154.s37
+          asset_content_type: application/binary
+          asset_path: build/release/rcp-uart-802154_2.s37
+          upload_url: ${{steps.release.outputs.upload_url}}
+      - name: Upload Firmware (HEX) to release ${{env.GECKO_VERSION}}
+        uses: actions/upload-release-asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: rcp-uart-802154.hex
+          asset_content_type: application/binary
+          asset_path: build/release/rcp-uart-802154_2.hex
+          upload_url: ${{steps.release.outputs.upload_url}}
