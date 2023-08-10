@@ -20,3 +20,22 @@ Configure as Below:
  - Hardware flow control: no
  - Automatically flash Firmware: no
 
+## Release procedure with github actions
+
+Simple step to update and release a new version.
+- Use Simplicity Studio to update and corret Gecko SDK to desidered version
+- Test the makefile with the shell command: 
+- Commit the modify with emote type
+  ```
+   ✨ feat (geckosdk): Update to versione 4.3.1
+  ```
+- Update CI file .github\workflow\build.yaml env 
+ ```yaml
+ env:
+  GECKO_VERSION: "4.3.1"
+  COMMANDER_VERSION: "1v15p3b1357"
+```
+- Commit with message `Release: <semver>` and push
+
+
+
