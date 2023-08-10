@@ -40,7 +40,7 @@ jobs:
       - name: create gbl
         run: ./commander/commander gbl create  "./build/release/rcp-uart-802154_2.gbl" --app "./build/release/rcp-uart-802154_2.s37"
       - name: Rename output build
-        run: for file in build/release/rcp-uart-802154_2*; do echo "$file" "${file/_2/}"; done
+        run: for file in build/release/rcp-uart-802154_2*; do mv "$file" "${file/_2/}"; done
       - uses: actions/upload-artifact@v3
         with:
           name: Firmwares
