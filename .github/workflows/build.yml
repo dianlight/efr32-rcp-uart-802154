@@ -57,14 +57,13 @@ jobs:
             🏗️ build: Build System & Dependencies
             🕜 perf: Performance Improvements
             📄 docs: Documentation
-            test: Tests
-            refactor: Refactors
-            chore: Chores
-            ci: CI
-            style: Code Style
-            revert: Reverts
+            🧪 test: Tests
+            ⚙️ refactor: Refactors
+            🤹 ci: CI
+            🌈 style: Code Style
       - name: Show Changelog
-        run: echo ${{steps.changelog.outputs.changelog}}
+        run: |-
+          echo "${{steps.changelog.outputs.changelog}}"
       - uses: CupOfTea696/gh-action-auto-release@v1.0.2
         id: release
         with:
