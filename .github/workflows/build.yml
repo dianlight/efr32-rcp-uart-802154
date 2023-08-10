@@ -17,6 +17,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Changelog
+        uses: ardalanamini/auto-changelog@v4
+        id: changelog
+        with:
+          release-name: v${{env.GECKO_VERSION}}
+          release-name-prefix: ""
+          commit-types: |
+            ✨ feat: New Features
+            🐞 fix: Bug Fixes
+            🏗️ build: Build System & Dependencies
+            🕜 perf: Performance Improvements
+            📄 docs: Documentation
+            🧪 test: Tests
+            ⚙️ refactor: Refactors
+            🤹 ci: CI
+            🌈 style: Code Style
+      - name: Update Changelog
+        uses: stefanzweifel/changelog-updater-action@v1
+        id: "changelog-updater"
+        with:
+          # Pass extracted release date, release notes and version to the Action.
+          # release-date: ${{ steps.release_date.outputs.date }}
+          release-notes: ${{steps.changelog.outputs.changelog}}
+          latest-version: v${{env.GECKO_VERSION}}
+          #compare-url-target-revision: ${{ github.event.release.target_commitish }}
+
+      - name: Show Changelog
+        run: |-
+          cat CHANGELOG.md
+
       - name: "Download And Install Simplicity Commander"
         run: |
           wget https://www.silabs.com/documents/login/software/SimplicityCommander-Linux.zip
@@ -45,26 +75,6 @@ jobs:
         with:
           name: Firmwares
           path: build/release/rcp-uart-802154* # or path/to/artifact
-      - name: Changelog
-        uses: ardalanamini/auto-changelog@v4
-        id: changelog
-        with:
-          release-name: v${{env.GECKO_VERSION}}
-          release-name-prefix: ""
-          commit-types: |
-            ✨ feat: New Features
-            🐞 fix: Bug Fixes
-            🏗️ build: Build System & Dependencies
-            🕜 perf: Performance Improvements
-            📄 docs: Documentation
-            🧪 test: Tests
-            ⚙️ refactor: Refactors
-            🤹 ci: CI
-            🌈 style: Code Style
-            Release: Release command [ignore]
-      - name: Show Changelog
-        run: |-
-          echo "${{steps.changelog.outputs.changelog}}"
       - uses: CupOfTea696/gh-action-auto-release@v1.0.2
         id: release
         with:
