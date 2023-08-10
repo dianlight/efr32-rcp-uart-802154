@@ -51,6 +51,18 @@ jobs:
         with:
           release-name: v${{env.GECKO_VERSION}}
           release-name-prefix: ""
+          commit-types: |
+            ✨ feat: New Features
+            🐞 fix: Bug Fixes
+            🏗️ build: Build System & Dependencies
+            🕜 perf: Performance Improvements
+            📄 docs: Documentation
+            test: Tests
+            refactor: Refactors
+            chore: Chores
+            ci: CI
+            style: Code Style
+            revert: Reverts
       - name: Show Changelog
         run: echo ${{steps.changelog.outputs.changelog}}
       - uses: CupOfTea696/gh-action-auto-release@v1.0.2
