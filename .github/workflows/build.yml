@@ -45,6 +45,14 @@ jobs:
         with:
           name: Firmwares
           path: build/release/rcp-uart-802154* # or path/to/artifact
+      - name: Changelog
+        uses: ardalanamini/auto-changelog@v4
+        id: changelog
+        with:
+          release-name: v${{env.GECKO_VERSION}}
+          release-name-prefix: ""
+      - name: Show Changelog
+        run: echo ${{steps.changelog.outputs.changelog}}
       - uses: CupOfTea696/gh-action-auto-release@v1.0.2
         id: release
         with:
