@@ -17,29 +17,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Changelog
-        uses: ardalanamini/auto-changelog@v4
-        id: changelog
-        with:
-          release-name: v${{env.GECKO_VERSION}}
-          release-name-prefix: ""
-          commit-types: |
-            ✨ feat: New Features
-            🐞 fix: Bug Fixes
-            🏗️ build: Build System & Dependencies
-            🕜 perf: Performance Improvements
-            📄 docs: Documentation
-            🧪 test: Tests
-            ⚙️ refactor: Refactors
-            🤹 ci: CI
-            🌈 style: Code Style
+      # - name: Changelog
+      #   uses: ardalanamini/auto-changelog@v4
+      #   id: changelog
+      #   with:
+      #     release-name: v${{env.GECKO_VERSION}}
+      #     release-name-prefix: ""
+      #     commit-types: |
+      #       ✨ feat: New Features
+      #       🐞 fix: Bug Fixes
+      #       🏗️ build: Build System & Dependencies
+      #       🕜 perf: Performance Improvements
+      #       📄 docs: Documentation
+      #       🧪 test: Tests
+      #       ⚙️ refactor: Refactors
+      #       🤹 ci: CI
+      #       🌈 style: Code Style
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         id: "changelog-updater"
         with:
           # Pass extracted release date, release notes and version to the Action.
           # release-date: ${{ steps.release_date.outputs.date }}
-          release-notes: ${{steps.changelog.outputs.changelog}}
+          #release-notes: ${{steps.changelog.outputs.changelog}}
           latest-version: v${{env.GECKO_VERSION}}
           #compare-url-target-revision: ${{ github.event.release.target_commitish }}
 
