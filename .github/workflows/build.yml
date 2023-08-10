@@ -61,6 +61,7 @@ jobs:
             ⚙️ refactor: Refactors
             🤹 ci: CI
             🌈 style: Code Style
+            Release: Release command [ignore]
       - name: Show Changelog
         run: |-
           echo "${{steps.changelog.outputs.changelog}}"
