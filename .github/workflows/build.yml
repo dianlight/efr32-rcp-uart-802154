@@ -53,6 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Firmware (GBL) to release ${{env.GECKO_VERSION}}
+        if: success()
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,6 +63,7 @@ jobs:
           asset_path: build/release/rcp-uart-802154_2.gbl
           upload_url: ${{steps.release.outputs.upload_url}}
       - name: Upload Firmware (BIN) to release ${{env.GECKO_VERSION}}
+        if: success()
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,6 +73,7 @@ jobs:
           asset_path: build/release/rcp-uart-802154_2.bin
           upload_url: ${{steps.release.outputs.upload_url}}
       - name: Upload Firmware (S37) to release ${{env.GECKO_VERSION}}
+        if: success()
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -80,6 +83,7 @@ jobs:
           asset_path: build/release/rcp-uart-802154_2.s37
           upload_url: ${{steps.release.outputs.upload_url}}
       - name: Upload Firmware (HEX) to release ${{env.GECKO_VERSION}}
+        if: success()
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
